@@ -18,12 +18,13 @@ func _ready():
 	tree = get_tree()
 	root = tree.root
 	current_scene_node = tree.current_scene
-	current_scene = load(tree.current_scene.filename)
+	tree.current_scene = null
 	call_deferred("init_game")
 	tree.connect("screen_resized",self,"on_screen_resized")
 	
 func init_game():
 	internal_res = Vector2(ProjectSettings.get_setting("display/window/size/width"),ProjectSettings.get_setting("display/window/size/height"))
+	#OS.min_window_size = internal_res
 	game_viewport = Viewport.new()
 	game_viewport.size = internal_res
 	root.add_child(game_viewport)
@@ -40,6 +41,15 @@ func init_game():
 	root.move_child(main_viewport_bg,0)	
 	
 	on_screen_resized()
+	
+	init_first_scene()
+	
+func init_first_scene():
+	var scene_path = ProjectSettings.get_setting("application/run/custom_first_scene")
+	if scene_path == "res://Init.tscn" || !ResourceLoader.exists(scene_path):
+		scene_path = "res://MainScene.tscn"
+	print(scene_path)
+	Global.change_scene_to(load(scene_path))
 	
 func on_screen_resized():
 	var win_size = root.size
