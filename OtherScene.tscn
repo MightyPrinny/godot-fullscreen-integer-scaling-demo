@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://sprite.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="bgOptions" type="Sprite" parent="."]
+position = Vector2( 0, 224 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+centered = false
